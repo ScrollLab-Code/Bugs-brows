@@ -570,7 +570,7 @@ export default function App() {
       <section className="bb-note bb-up" style={{ animationDelay: ".52s" }}>
         <p>
           Para reservar tu turno es necesario señar <strong>la mitad del servicio</strong> a realizar.
-          Sin devolución si se cancela sin aviso previo. Consultá tu alias por mensaje.
+          Sin devolución si se cancela sin aviso previo a 24hs. 
         </p>
       </section>
 
