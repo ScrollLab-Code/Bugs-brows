@@ -1,10 +1,13 @@
 import { useEffect, useRef, useState } from "react";
+import logo from "./assets/logo.jpg";
 import foto1 from "./assets/foto1.jpg";
 import foto2 from "./assets/foto2.jpg";
 import foto3 from "./assets/foto3.jpeg";
 import foto4 from "./assets/foto4.jpeg";
 import foto5 from "./assets/foto5.jpeg";
 import foto6 from "./assets/foto6.jpeg";
+import { supabase } from "./lib/supabase";
+
 
 
 const WHATSAPP_TEXT =
@@ -132,192 +135,7 @@ const SERVICIOS = {
   ],
 };
 
-const CSS = `
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,500&display=swap');
-
-*, *::before, *::after { box-sizing: border-box; }
-:root {
-  --bg: #fff7f8;
-  --surface: #ffffff;
-  --rose: #c4607a;
-  --rose-dark: #8e334a;
-  --petal: #fae0e7;
-  --mauve: #6f3c4c;
-  --ink: #28131b;
-  --muted: #8f6975;
-  --border: rgba(196, 96, 122, .17);
-}
-
-html { scroll-behavior: smooth; }
-body {
-  margin: 0;
-  min-width: 320px;
-  background: var(--bg);
-  color: var(--ink);
-  font-family: 'Outfit', system-ui, sans-serif;
-}
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 999;
-  opacity: .42;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");
-}
-
-@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-@keyframes pulse { 0%, 100% { transform: scale(1); opacity: .55; } 50% { transform: scale(1.55); opacity: 1; } }
-
-.bb-up { opacity: 0; animation: fadeUp .7s ease forwards; }
-.bb-shell { position: relative; min-height: 100vh; overflow-x: hidden; background: linear-gradient(180deg, #fff7f8 0%, #fff 46%, #fff7f8 100%); }
-.bb-shell::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background:
-    linear-gradient(110deg, rgba(250, 224, 231, .72), transparent 34%),
-    linear-gradient(250deg, rgba(196, 96, 122, .13), transparent 32%);
-}
-.bb-wrap { width: min(1060px, calc(100% - 40px)); margin: 0 auto; position: relative; z-index: 2; }
-
-.bb-header { position: relative; z-index: 2; text-align: center; padding: 68px 20px 22px; }
-.bb-mark {
-  width: 96px;
-  height: 96px;
-  margin: 0 auto 22px;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  background: #fff;
-  border: 1px solid var(--border);
-  box-shadow: 0 18px 52px rgba(196, 96, 122, .16);
-}
-.bb-mark span {
-  width: 54px;
-  height: 54px;
-  display: block;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 35% 30%, rgba(255,255,255,.8) 0 10%, transparent 11%),
-    linear-gradient(135deg, #ea4d6b, #a93450);
-  box-shadow: inset 0 -10px 24px rgba(40, 19, 27, .18);
-}
-.bb-title {
-  margin: 0;
-  color: var(--ink);
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: clamp(62px, 13vw, 118px);
-  font-weight: 400;
-  line-height: .84;
-}
-.bb-title em { color: var(--rose); font-style: italic; }
-.bb-kicker {
-  margin: 22px 0 0;
-  color: var(--muted);
-  font-size: 11px;
-  font-weight: 400;
-  letter-spacing: .26em;
-  text-transform: uppercase;
-}
-.bb-ornament { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 28px auto 0; }
-.bb-ornament::before, .bb-ornament::after { content: ""; width: 58px; height: 1px; background: linear-gradient(90deg, transparent, var(--rose)); }
-.bb-ornament::after { background: linear-gradient(90deg, var(--rose), transparent); }
-.bb-ornament span { width: 6px; height: 6px; border-radius: 50%; background: var(--rose); opacity: .7; }
-
-.bb-gal { position: relative; z-index: 2; overflow: hidden; padding: 12px 0 2px; margin-bottom: 58px; }
-.bb-gal::before, .bb-gal::after { content: ""; position: absolute; top: 0; bottom: 0; width: 110px; z-index: 2; pointer-events: none; }
-.bb-gal::before { left: 0; background: linear-gradient(90deg, var(--bg), transparent); }
-.bb-gal::after { right: 0; background: linear-gradient(270deg, var(--bg), transparent); }
-.bb-track { display: flex; gap: 12px; width: max-content; animation: marquee 34s linear infinite; }
-.bb-track:hover { animation-play-state: paused; }
-.bb-gitem { width: 205px; height: 274px; flex: 0 0 auto; overflow: hidden; position: relative; border-radius: 8px; border: 1px solid var(--border); box-shadow: 0 16px 42px rgba(196, 96, 122, .12); background: #fff; }
-.bb-gitem img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
-.bb-gitem::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(40,19,27,.46), transparent 52%); }
-.bb-gtag { position: absolute; z-index: 2; left: 14px; bottom: 14px; color: #fff; font-size: 10px; letter-spacing: .18em; text-transform: uppercase; }
-
-.bb-note { max-width: 620px; margin: 0 auto 52px; padding: 0 20px; position: relative; z-index: 2; }
-.bb-note p { margin: 0; padding: 17px 22px; border: 1px solid var(--border); border-radius: 8px; background: rgba(255,255,255,.72); color: var(--mauve); text-align: center; font-size: 13px; font-weight: 300; line-height: 1.7; box-shadow: 0 18px 45px rgba(196, 96, 122, .08); }
-.bb-note strong { color: var(--rose-dark); font-weight: 600; }
-
-.bb-filter { position: relative; z-index: 2; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; padding: 0 20px 54px; }
-.bb-btn { min-height: 38px; padding: 9px 20px; border: 1px solid var(--border); border-radius: 999px; background: rgba(255,255,255,.58); color: var(--muted); cursor: pointer; font: 500 11px/1 'Outfit', sans-serif; letter-spacing: .18em; text-transform: uppercase; transition: .22s ease; }
-.bb-btn:hover, .bb-btn.active { border-color: var(--rose); background: var(--rose); color: #fff; }
-
-.bb-section { margin-bottom: 74px; }
-.bb-heading { display: flex; align-items: baseline; gap: 18px; margin-bottom: 28px; }
-.bb-heading h2 { margin: 0; color: var(--ink); font-family: 'Playfair Display', Georgia, serif; font-size: clamp(30px, 4.5vw, 48px); font-style: italic; font-weight: 400; white-space: nowrap; }
-.bb-heading span { height: 1px; flex: 1; background: var(--border); }
-.bb-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(285px, 1fr)); gap: 14px; }
-.bb-card { min-height: 216px; padding: 28px 26px; position: relative; display: flex; flex-direction: column; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); box-shadow: 0 16px 42px rgba(196, 96, 122, .08); opacity: 0; animation: fadeUp .62s ease forwards; transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
-.bb-card:hover { transform: translateY(-5px); border-color: rgba(196, 96, 122, .38); box-shadow: 0 24px 54px rgba(196, 96, 122, .14); }
-.bb-card.feat { background: linear-gradient(135deg, var(--petal), #fff); }
-.bb-card.dark { background: linear-gradient(135deg, var(--rose-dark), var(--mauve)); color: #fff; border-color: transparent; }
-.bb-card.wide { grid-column: span 2; }
-.bb-card.dark .bb-desc { color: rgba(255,255,255,.72); }
-.bb-card.dark .bb-foot { border-top-color: rgba(255,255,255,.2); }
-.bb-card.dark .bb-price, .bb-card.dark .bb-cta { color: #fff; }
-.bb-badge { position: absolute; top: 17px; right: 17px; padding: 5px 10px; border-radius: 999px; background: var(--rose); color: #fff; font-size: 9px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; }
-.bb-badge.soft { background: #fff; color: var(--rose-dark); }
-.bb-name { max-width: 82%; margin-bottom: 11px; font-family: 'Playfair Display', Georgia, serif; font-size: 21px; font-weight: 400; line-height: 1.22; }
-.bb-desc { margin: 0 0 22px; color: var(--muted); font-size: 13px; font-weight: 300; line-height: 1.68; }
-.bb-foot { margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 16px; border-top: 1px solid var(--border); }
-.bb-price { color: var(--rose-dark); font-family: 'Playfair Display', Georgia, serif; font-size: 28px; }
-.bb-cta { color: var(--rose); text-decoration: none; font-size: 10px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; white-space: nowrap; opacity: .72; }
-.bb-cta:hover { opacity: 1; }
-
-.bb-ba-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-.bb-ba-card { aspect-ratio: 3 / 4; overflow: hidden; position: relative; border-radius: 8px; border: 1px solid var(--border); background: #fff; box-shadow: 0 16px 42px rgba(196, 96, 122, .1); }
-.bb-slider { width: 100%; height: 100%; position: relative; cursor: ew-resize; user-select: none; touch-action: none; }
-.bb-layer { position: absolute; inset: 0; }
-.bb-layer img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; pointer-events: none; }
-.bb-clip { clip-path: inset(0 50% 0 0); }
-.bb-line { position: absolute; top: 0; bottom: 0; width: 2px; transform: translateX(-50%); background: rgba(255,255,255,.95); box-shadow: 0 0 10px rgba(40,19,27,.18); z-index: 3; }
-.bb-knob { position: absolute; top: 50%; transform: translate(-50%, -50%); width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; background: #fff; color: var(--rose-dark); font-size: 16px; box-shadow: 0 7px 20px rgba(40,19,27,.18); z-index: 4; pointer-events: none; }
-.bb-lbl { position: absolute; bottom: 14px; z-index: 5; padding: 5px 10px; border-radius: 999px; font-size: 9px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; }
-.lb { left: 12px; color: #fff; background: rgba(40,19,27,.56); }
-.la { right: 12px; color: #fff; background: var(--rose); }
-
-.bb-footer { position: relative; z-index: 2; text-align: center; padding: 46px 24px 94px; border-top: 1px solid var(--border); }
-.bb-footer-logo { color: var(--rose); font-family: 'Playfair Display', Georgia, serif; font-size: 38px; font-style: italic; }
-.bb-footer p { margin: 10px 0 0; color: var(--muted); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; }
-.bb-fab-wrap { position: fixed; z-index: 100; bottom: 24px; left: 50%; transform: translateX(-50%); }
-.bb-fab { min-height: 48px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 34px; border: 0; border-radius: 999px; background: var(--rose); color: #fff; text-decoration: none; box-shadow: 0 16px 42px rgba(196, 96, 122, .36); font-size: 11px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; white-space: nowrap; transition: .22s ease; cursor: pointer; font-family: 'Outfit', system-ui, sans-serif; }
-.bb-fab:hover { transform: translateY(-2px); background: var(--rose-dark); }
-.bb-pulse { width: 8px; height: 8px; flex: 0 0 auto; border-radius: 50%; background: rgba(255,255,255,.75); animation: pulse 2s ease infinite; }
-.bb-booking-backdrop { position: fixed; inset: 0; z-index: 500; display: grid; place-items: end center; padding: 22px; background: rgba(40, 19, 27, .38); backdrop-filter: blur(8px); }
-.bb-booking { width: min(520px, 100%); padding: 24px; border-radius: 8px; background: #fff; box-shadow: 0 24px 70px rgba(40, 19, 27, .28); border: 1px solid var(--border); }
-.bb-booking-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
-.bb-booking h2 { margin: 0 0 6px; font-family: 'Playfair Display', Georgia, serif; font-size: 30px; font-weight: 400; color: var(--ink); }
-.bb-booking p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.5; }
-.bb-hours { margin: 14px 0 0; padding: 10px 12px; border-radius: 8px; background: rgba(196, 96, 122, .08); color: var(--rose-dark); font-size: 13px; line-height: 1.45; }
-.bb-close { width: 34px; height: 34px; flex: 0 0 auto; border: 1px solid var(--border); border-radius: 50%; background: #fff; color: var(--rose-dark); cursor: pointer; font-size: 22px; line-height: 1; }
-.bb-form { display: grid; gap: 13px; }
-.bb-field { display: grid; gap: 6px; color: var(--mauve); font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
-.bb-field input, .bb-field select, .bb-field textarea { width: 100%; min-height: 44px; border: 1px solid var(--border); border-radius: 8px; background: #fffafa; color: var(--ink); padding: 11px 12px; font: 400 15px/1.35 'Outfit', system-ui, sans-serif; outline: none; }
-.bb-field textarea { min-height: 82px; resize: vertical; }
-.bb-field input:focus, .bb-field select:focus, .bb-field textarea:focus { border-color: var(--rose); box-shadow: 0 0 0 3px rgba(196, 96, 122, .12); }
-.bb-error { margin: 0; padding: 10px 12px; border-radius: 8px; background: #fff1f3; color: var(--rose-dark); font-size: 13px; line-height: 1.45; }
-.bb-submit { min-height: 48px; border: 0; border-radius: 999px; background: var(--rose); color: #fff; cursor: pointer; font: 600 11px/1 'Outfit', system-ui, sans-serif; letter-spacing: .18em; text-transform: uppercase; box-shadow: 0 14px 34px rgba(196, 96, 122, .25); }
-.bb-submit:hover { background: var(--rose-dark); }
-
-@media (max-width: 760px) {
-  .bb-wrap { width: min(100% - 28px, 1060px); }
-  .bb-header { padding-top: 44px; }
-  .bb-kicker { letter-spacing: .18em; line-height: 1.8; }
-  .bb-gitem { width: 178px; height: 240px; }
-  .bb-gal::before, .bb-gal::after { width: 54px; }
-  .bb-card.wide { grid-column: span 1; }
-  .bb-ba-grid { grid-template-columns: 1fr; }
-  .bb-heading { gap: 12px; }
-  .bb-foot { align-items: flex-end; }
-  .bb-fab { width: calc(100vw - 40px); max-width: 340px; }
-  .bb-booking-backdrop { padding: 12px; }
-  .bb-booking { padding: 20px; }
-}
-`;
+const CSS = ``;
 
 function Gallery() {
   const items = [...GALERIA, ...GALERIA];
@@ -357,6 +175,7 @@ function Card({ item, index, onBook }) {
 function BASlider({ antes, despues }) {
   const ref = useRef(null);
   const dragging = useRef(false);
+  const startX = useRef(0);
   const [pos, setPos] = useState(50);
   const useBW = antes === despues;
 
@@ -391,6 +210,12 @@ function BASlider({ antes, despues }) {
     };
   }, []);
 
+  const handleStart = (clientX) => {
+    startX.current = clientX;
+    dragging.current = true;
+    move(clientX);
+  };
+
   return (
     <div className="bb-ba-card">
       <div
@@ -399,12 +224,10 @@ function BASlider({ antes, despues }) {
         role="img"
         aria-label="Comparación antes y después"
         onMouseDown={(event) => {
-          dragging.current = true;
-          move(event.clientX);
+          handleStart(event.clientX);
         }}
         onTouchStart={(event) => {
-          dragging.current = true;
-          move(event.touches[0].clientX);
+          handleStart(event.touches[0].clientX);
         }}
       >
         <div className="bb-layer">
@@ -430,87 +253,483 @@ function BASlider({ antes, despues }) {
 
 function BookingModal({ servicioInicial, servicios, onClose }) {
   const [form, setForm] = useState({
-    servicio: servicioInicial || servicios[0],
+    serviciosSeleccionados: servicioInicial
+      ? [servicioInicial]
+      : [],
     nombre: "",
+    correo: "",
+    identificacion: "",
     fecha: "",
     horario: "",
     nota: "",
   });
+
   const [error, setError] = useState("");
+  const [search, setSearch] = useState("");
+  const [open, setOpen] = useState(false);
+  const [horariosDisponibles, setHorariosDisponibles] = useState(TIME_OPTIONS);
+  const [cargando, setCargando] = useState(false);
+
+  const getHorariosDisponibles = async (fecha) => {
+    if (!fecha) return TIME_OPTIONS;
+
+    setCargando(true);
+    try {
+      const { data, error: err } = await supabase
+        .from('reservas')
+        .select('hora')
+        .eq('fecha', fecha);
+
+      if (err) throw err;
+
+      const horariosReservados = new Set(data.map(r => r.hora));
+      const disponibles = TIME_OPTIONS.filter(h => !horariosReservados.has(h));
+      setHorariosDisponibles(disponibles);
+    } catch (err) {
+      console.error('Error cargando horarios:', err);
+      setHorariosDisponibles(TIME_OPTIONS);
+    } finally {
+      setCargando(false);
+    }
+  };
 
   const update = (event) => {
     setError("");
-    setForm((current) => ({ ...current, [event.target.name]: event.target.value }));
+
+    const { name, value } = event.target;
+
+    if (name === 'fecha') {
+      getHorariosDisponibles(value);
+      setForm((current) => ({
+        ...current,
+        [name]: value,
+        horario: "",
+      }));
+    } else {
+      setForm((current) => ({
+        ...current,
+        [name]: value,
+      }));
+    }
   };
 
-  const submit = (event) => {
+  const toggleServicio = (servicio) => {
+    setForm((current) => {
+      const exists =
+        current.serviciosSeleccionados.includes(
+          servicio
+        );
+
+      return {
+        ...current,
+
+        serviciosSeleccionados: exists
+          ? current.serviciosSeleccionados.filter(
+              (s) => s !== servicio
+            )
+          : [
+              ...current.serviciosSeleccionados,
+              servicio,
+            ],
+      };
+    });
+  };
+
+  const submit = async (event) => {
     event.preventDefault();
 
-    if (!isValidBookingTime(form.fecha, form.horario)) {
-      setError(`Los turnos disponibles son ${BOOKING_HOURS.toLowerCase()}`);
+    if (
+      form.serviciosSeleccionados.length === 0
+    ) {
+      setError(
+        "Seleccioná al menos un servicio."
+      );
       return;
     }
 
-    window.open(whatsappUrl(form), "_blank", "noopener,noreferrer");
-    onClose();
+    if (!form.nombre || !form.correo || !form.identificacion) {
+      setError("Completá nombre, correo e identificación.");
+      return;
+    }
+
+    if (
+      !isValidBookingTime(
+        form.fecha,
+        form.horario
+      )
+    ) {
+      setError(
+        `Los turnos disponibles son ${BOOKING_HOURS.toLowerCase()}`
+      );
+      return;
+    }
+
+    try {
+      const { error: err } = await supabase
+        .from('reservas')
+        .insert({
+          identificacion: form.identificacion,
+          nombre: form.nombre,
+          correo: form.correo,
+          fecha: form.fecha,
+          hora: form.horario,
+        });
+
+      if (err) throw err;
+
+      const lines = [
+        "Hola! Quiero reservar un turno en Bugs Brows.",
+        "",
+        "Servicios:",
+        ...form.serviciosSeleccionados.map(
+          (s) => `• ${s}`
+        ),
+        "",
+        `Nombre: ${form.nombre}`,
+        `Correo: ${form.correo}`,
+        `Fecha: ${form.fecha}`,
+        `Horario: ${form.horario}`,
+        form.nota
+          ? `Nota: ${form.nota}`
+          : "",
+      ].filter(Boolean);
+
+      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+        lines.join("\n")
+      )}`;
+
+      window.open(
+        url,
+        "_blank",
+        "noopener,noreferrer"
+      );
+
+      onClose();
+    } catch (err) {
+      setError("Error al guardar la reserva. Intenta de nuevo.");
+      console.error(err);
+    }
   };
 
   return (
-    <div className="bb-booking-backdrop" role="presentation" onMouseDown={onClose}>
+    <div
+      className="bb-booking-backdrop"
+      role="presentation"
+      onClick={onClose}
+    >
       <section
         className="bb-booking"
         role="dialog"
         aria-modal="true"
         aria-labelledby="booking-title"
-        onMouseDown={(event) => event.stopPropagation()}
+        onClick={(event) =>
+          event.stopPropagation()
+        }
       >
         <div className="bb-booking-head">
           <div>
-            <h2 id="booking-title">Agendar turno</h2>
-            <p>Completá tus datos y se enviarán por WhatsApp a la dueña para confirmar disponibilidad.</p>
-            <div className="bb-hours">{BOOKING_HOURS}</div>
+            <h2 id="booking-title">
+              Agendar turno
+            </h2>
+
+            <p>
+              Completá tus datos y se enviarán por
+              WhatsApp a la dueña para confirmar
+              disponibilidad.
+            </p>
+
+            <div className="bb-hours">
+              {BOOKING_HOURS}
+            </div>
           </div>
-          <button className="bb-close" type="button" aria-label="Cerrar" onClick={onClose}>
+
+          <button
+            className="bb-close"
+            type="button"
+            aria-label="Cerrar"
+            onClick={onClose}
+          >
             ×
           </button>
         </div>
 
-        <form className="bb-form" onSubmit={submit}>
+        <form
+          className="bb-form"
+          onSubmit={submit}
+        >
           <label className="bb-field">
-            Servicio
-            <select name="servicio" value={form.servicio} onChange={update} required>
-              {servicios.map((item) => (
-                <option value={item} key={item}>
-                  {item}
-                </option>
-              ))}
-            </select>
+            Servicios
+
+            <div
+              style={{
+                position: "relative",
+                marginTop: "6px",
+              }}
+            >
+              <div
+                onClick={() =>
+                  setOpen((v) => !v)
+                }
+                style={{
+                  width: "100%",
+                  minHeight: "48px",
+                  border:
+                    "1px solid var(--border)",
+                  borderRadius: "14px",
+                  background: "#fffafa",
+                  padding: "12px 14px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent:
+                    "space-between",
+                  cursor: "pointer",
+                  fontFamily:
+                    "Outfit, sans-serif",
+                }}
+              >
+                <span>
+                  {form
+                    .serviciosSeleccionados
+                    .length > 0
+                    ? `${form.serviciosSeleccionados.length} servicio(s) seleccionado(s)`
+                    : "Seleccionar servicios"}
+                </span>
+
+                <span>
+                  {open ? "▲" : "▼"}
+                </span>
+              </div>
+
+              {open && (
+                <div
+                  style={{
+                    position: "absolute",
+                    top:
+                      "calc(100% + 8px)",
+                    left: 0,
+                    right: 0,
+                    zIndex: 999,
+                    background: "#fff",
+                    border:
+                      "1px solid var(--border)",
+                    borderRadius: "16px",
+                    padding: "10px",
+                    boxShadow:
+                      "0 20px 50px rgba(40,19,27,.12)",
+                  }}
+                >
+                  <input
+                    type="text"
+                    placeholder="Buscar servicio..."
+                    value={search}
+                    onChange={(e) =>
+                      setSearch(
+                        e.target.value
+                      )
+                    }
+                    autoFocus
+                    style={{
+                      width: "100%",
+                      minHeight: "42px",
+                      border:
+                        "1px solid var(--border)",
+                      borderRadius: "12px",
+                      background:
+                        "#fffafa",
+                      padding:
+                        "10px 12px",
+                      marginBottom:
+                        "10px",
+                      outline: "none",
+                      fontFamily:
+                        "Outfit, sans-serif",
+                    }}
+                  />
+
+                  <div
+                    style={{
+                      display: "grid",
+                      gap: "8px",
+                      maxHeight:
+                        "220px",
+                      overflowY:
+                        "auto",
+                    }}
+                  >
+                    {servicios
+                      .filter((item) =>
+                        item
+                          .toLowerCase()
+                          .includes(
+                            search.toLowerCase()
+                          )
+                      )
+                      .map((item) => {
+                        const active =
+                          form.serviciosSeleccionados.includes(
+                            item
+                          );
+
+                        return (
+                          <div
+                            key={item}
+                            onClick={() =>
+                              toggleServicio(
+                                item
+                              )
+                            }
+                            style={{
+                              border: active
+                                ? "1px solid var(--rose)"
+                                : "1px solid var(--border)",
+
+                              background: active
+                                ? "linear-gradient(135deg,var(--petal),#fff)"
+                                : "#fff",
+
+                              color:
+                                "var(--ink)",
+
+                              borderRadius:
+                                "12px",
+
+                              padding:
+                                "13px",
+
+                              cursor:
+                                "pointer",
+
+                              textAlign:
+                                "left",
+
+                              fontFamily:
+                                "Outfit, sans-serif",
+                            }}
+                          >
+                            {active
+                              ? "✓ "
+                              : ""}
+                            {item}
+                          </div>
+                        );
+                      })}
+                  </div>
+
+                  <div
+                    onClick={() => {
+                      setOpen(false);
+                      setSearch("");
+                    }}
+                    style={{
+                      marginTop: "10px",
+                      width: "100%",
+                      minHeight: "42px",
+                      borderRadius:
+                        "12px",
+                      background:
+                        "var(--rose)",
+                      color: "#fff",
+                      cursor: "pointer",
+                      fontFamily:
+                        "Outfit, sans-serif",
+                      fontWeight: "600",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent:
+                        "center",
+                    }}
+                  >
+                    Listo
+                  </div>
+                </div>
+              )}
+            </div>
+          </label>
+
+          <label className="bb-field">
+            Identificación
+
+            <input
+              name="identificacion"
+              value={form.identificacion}
+              onChange={update}
+              placeholder="Tu DNI o cédula"
+              required
+            />
           </label>
 
           <label className="bb-field">
             Nombre
-            <input name="nombre" value={form.nombre} onChange={update} placeholder="Tu nombre" required />
+
+            <input
+              name="nombre"
+              value={form.nombre}
+              onChange={update}
+              placeholder="Tu nombre"
+              required
+            />
+          </label>
+
+          <label className="bb-field">
+            Correo
+
+            <input
+              name="correo"
+              type="email"
+              value={form.correo}
+              onChange={update}
+              placeholder="tu@correo.com"
+              required
+            />
           </label>
 
           <label className="bb-field">
             Fecha
-            <input name="fecha" type="date" value={form.fecha} onChange={update} required />
+
+            <input
+              name="fecha"
+              type="date"
+              value={form.fecha}
+              onChange={update}
+              required
+            />
           </label>
 
           <label className="bb-field">
             Horario
-            <select name="horario" value={form.horario} onChange={update} required>
-              <option value="">Elegí un horario</option>
-              {TIME_OPTIONS.map((time) => (
-                <option value={time} key={time}>
-                  {time}
-                </option>
-              ))}
+
+            <select
+              name="horario"
+              value={form.horario}
+              onChange={update}
+              required
+              disabled={cargando || !form.fecha}
+            >
+              <option value="">
+                {cargando ? "Cargando horarios..." : "Elegí un horario"}
+              </option>
+
+              {horariosDisponibles.map(
+                (time) => (
+                  <option
+                    value={time}
+                    key={time}
+                  >
+                    {time}
+                  </option>
+                )
+              )}
             </select>
+            {form.fecha && horariosDisponibles.length === 0 && (
+              <p style={{ margin: "6px 0 0", color: "var(--rose-dark)", fontSize: "13px" }}>
+                Sin horarios disponibles para esta fecha
+              </p>
+            )}
           </label>
 
           <label className="bb-field">
             Nota
+
             <textarea
               name="nota"
               value={form.nota}
@@ -519,9 +738,16 @@ function BookingModal({ servicioInicial, servicios, onClose }) {
             />
           </label>
 
-          {error && <p className="bb-error">{error}</p>}
+          {error && (
+            <p className="bb-error">
+              {error}
+            </p>
+          )}
 
-          <button className="bb-submit" type="submit">
+          <button
+            className="bb-submit"
+            type="submit"
+          >
             Enviar por WhatsApp
           </button>
         </form>
@@ -529,27 +755,31 @@ function BookingModal({ servicioInicial, servicios, onClose }) {
     </div>
   );
 }
-
 export default function App() {
   const [filtro, setFiltro] = useState("Todos");
   const [bookingService, setBookingService] = useState(null);
   const categorias = ["Todos", "Cejas", "Pestañas", "Otros"];
   const servicios = Object.values(SERVICIOS).flat().map((item) => item.nombre);
 
-  useEffect(() => {
-    const style = document.createElement("style");
-    style.textContent = CSS;
-    document.head.appendChild(style);
-
-    return () => document.head.removeChild(style);
-  }, []);
-
   return (
     <div className="bb-shell">
       <header className="bb-header">
-        <div className="bb-mark bb-up" style={{ animationDelay: ".05s" }} aria-hidden="true">
-          <span />
-        </div>
+       <div
+  className="bb-mark bb-up"
+  style={{ animationDelay: ".05s" }}
+>
+  <img
+    src={logo}
+    alt="Bugs Brows"
+    style={{
+      width: "78px",
+      height: "78px",
+      objectFit: "contain",
+      filter:
+        "drop-shadow(0 10px 25px rgba(196,96,122,.25))",
+    }}
+  />
+</div>
         <h1 className="bb-title bb-up" style={{ animationDelay: ".16s" }}>
           Bugs
           <br />
@@ -630,14 +860,14 @@ export default function App() {
           Reservar turno
         </button>
       </div>
-
-      {bookingService && (
-        <BookingModal
-          servicioInicial={bookingService}
-          servicios={servicios}
-          onClose={() => setBookingService(null)}
-        />
-      )}
+{bookingService && (
+  <BookingModal
+    servicioInicial={bookingService}
+    servicios={servicios}
+    onClose={() => setBookingService(null)}
+  />
+)}
+     
     </div>
   );
 }

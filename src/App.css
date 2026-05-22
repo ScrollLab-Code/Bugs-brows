@@ -181,4 +181,30 @@
     right: 0;
     border-right-color: var(--border);
   }
+  .bb-mark {
+  width: 118px;
+  height: 118px;
+
+  margin: 0 auto 24px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 32px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,.82),
+      rgba(255,255,255,.55)
+    );
+
+  backdrop-filter: blur(14px);
+
+  border: 1px solid rgba(255,255,255,.6);
+
+  box-shadow:
+    0 20px 60px rgba(196,96,122,.18),
+    inset 0 1px 0 rgba(255,255,255,.7);
+}
 }
