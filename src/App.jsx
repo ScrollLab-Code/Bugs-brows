@@ -364,16 +364,6 @@ function BookingModal({ servicioInicial, servicios, onClose }) {
     }
 
     try {
-      const { error: err } = await supabase
-        .from('reservas')
-        .insert({
-          nombre: form.nombre,
-          fecha: form.fecha,
-          hora: form.horario,
-        });
-
-      if (err) throw err;
-
       const lines = [
         "Hola! Quiero reservar un turno en Bugs Brows.",
         "",
@@ -402,7 +392,7 @@ function BookingModal({ servicioInicial, servicios, onClose }) {
 
       onClose();
     } catch (err) {
-      setError("Error al guardar la reserva. Intenta de nuevo.");
+      setError("Error al abrir WhatsApp. Intenta de nuevo.");
       console.error(err);
     }
   };
