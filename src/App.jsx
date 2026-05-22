@@ -258,8 +258,6 @@ function BookingModal({ servicioInicial, servicios, onClose }) {
       ? [servicioInicial]
       : [],
     nombre: "",
-    correo: "",
-    identificacion: "",
     fecha: "",
     horario: "",
     nota: "",
@@ -348,8 +346,8 @@ function BookingModal({ servicioInicial, servicios, onClose }) {
       return;
     }
 
-    if (!form.nombre || !form.correo || !form.identificacion) {
-      setError("Completá nombre, correo e identificación.");
+    if (!form.nombre) {
+      setError("Completá tu nombre.");
       return;
     }
 
@@ -369,9 +367,7 @@ function BookingModal({ servicioInicial, servicios, onClose }) {
       const { error: err } = await supabase
         .from('reservas')
         .insert({
-          identificacion: form.identificacion,
           nombre: form.nombre,
-          correo: form.correo,
           fecha: form.fecha,
           hora: form.horario,
         });
@@ -387,7 +383,6 @@ function BookingModal({ servicioInicial, servicios, onClose }) {
         ),
         "",
         `Nombre: ${form.nombre}`,
-        `Correo: ${form.correo}`,
         `Fecha: ${form.fecha}`,
         `Horario: ${form.horario}`,
         form.nota
@@ -648,18 +643,6 @@ function BookingModal({ servicioInicial, servicios, onClose }) {
           </label>
 
           <label className="bb-field">
-            Identificación
-
-            <input
-              name="identificacion"
-              value={form.identificacion}
-              onChange={update}
-              placeholder="Tu DNI o cédula"
-              required
-            />
-          </label>
-
-          <label className="bb-field">
             Nombre
 
             <input
@@ -667,19 +650,6 @@ function BookingModal({ servicioInicial, servicios, onClose }) {
               value={form.nombre}
               onChange={update}
               placeholder="Tu nombre"
-              required
-            />
-          </label>
-
-          <label className="bb-field">
-            Correo
-
-            <input
-              name="correo"
-              type="email"
-              value={form.correo}
-              onChange={update}
-              placeholder="tu@correo.com"
               required
             />
           </label>
