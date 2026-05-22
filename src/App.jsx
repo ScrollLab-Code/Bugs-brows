@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Analytics } from "@vercel/analytics/react";
 import logo from "./assets/logo.jpg";
 import foto1 from "./assets/foto1.jpg";
 import foto2 from "./assets/foto2.jpg";
@@ -763,6 +764,7 @@ export default function App() {
 
   return (
     <div className="bb-shell">
+      <Analytics />
       <header className="bb-header">
        <div
   className="bb-mark bb-up"
