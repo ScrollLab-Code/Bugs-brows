@@ -72,17 +72,17 @@ const SERVICIOS = {
       precio: "$28.000",
     },
     {
-      nombre: "Con cera",
+      nombre: "Diseño y perfilado con cera",
       desc: "Epilación rápida y efectiva para unas cejas limpias y definidas por más tiempo.",
       precio: "$21.000",
     },
     {
-      nombre: "Perfilado con hilo",
+      nombre: "Diseño y perfilado con hilo",
       desc: "Técnica precisa y delicada que elimina el vello desde la raíz. Ideal para pieles sensibles.",
       precio: "$20.000",
     },
     {
-      nombre: "Diseño y perfilado",
+      nombre: "Diseño y perfilado con pinzas",
       desc: "Diseño personalizado según tu rostro para lograr cejas armónicas y prolijas.",
       precio: "$19.000",
       variante: "feat",
@@ -104,13 +104,13 @@ const SERVICIOS = {
       badge: "Tendencia",
     },
     {
-      nombre: "Lifting + botox + keratina + color",
-      desc: "Tratamiento intensivo técnica dúo. Fortalece, nutre y realza con curvatura más definida.",
+      nombre: "Lashlifting tecnica duo",
+      desc: "Tratamiento intensivo: Lifting + botox + keratina + color, Fortalece, nutre y realza con curvatura más definida.",
       precio: "$32.000",
       variante: "feat",
     },
     {
-      nombre: "Lifting + botox & color",
+      nombre: "lashlifting tecnica clasica",
       desc: "Eleva y curva tus pestañas naturales aportando color, hidratación y mirada más abierta.",
       precio: "$30.000",
     },
@@ -762,7 +762,7 @@ export default function App() {
       <section className="bb-note bb-up" style={{ animationDelay: ".52s" }}>
         <p>
           Para reservar tu turno es necesario señar <strong>la mitad del servicio</strong> a realizar.
-          Sin devolución si se cancela sin aviso previo a 24hs. 
+          Sin devolución si se cancela sin aviso previo a 24hs.          <strong>Importante:</strong> contamos con 10 minutos de tolerancia, pasado ese tiempo, se pierde el turno para respetar la agenda de todas las clientas.
         </p>
       </section>
 
