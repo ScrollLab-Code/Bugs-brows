@@ -15,7 +15,7 @@ const WHATSAPP_TEXT =
   "Hola! Quiero reservar un turno en Bugs Brows.";
 const WHATSAPP_NUMBER = "5492942344488";
 const BOOKING_HOURS = "Lunes a sábados de 09:00 a 12:00 y de 21:00 a 23:00.";
-const TIME_OPTIONS = ["09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "21:00", "21:30", "22:00", "22:30", "23:00"];
+const TIME_OPTIONS = ["09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "21:30", "22:00", "22:30", "23:00"];
 
 const isValidBookingTime = (fecha, horario) => {
   if (!fecha || !horario) return false;
@@ -74,12 +74,26 @@ const SERVICIOS = {
     {
       nombre: "Diseño y perfilado con cera",
       desc: "Epilación rápida y efectiva para unas cejas limpias y definidas por más tiempo.",
-      precio: "$21.000",
+     precioAnterior: "$  ̷2̷1̷.̷0̷0̷0̷  |  ",
+     precio: " $16.000",
+     descuento: "25% OFF",
+     oferta: true,
+     variante: "dark",
+     badge: "🔥 Oferta",
+     wide: true,
+      
     },
     {
       nombre: "Diseño y perfilado con hilo",
       desc: "Técnica precisa y delicada que elimina el vello desde la raíz. Ideal para pieles sensibles.",
-      precio: "$20.000",
+     precioAnterior: " $  ̷2̷0̷.̷0̷0̷0̷  |  ",
+     precio: " $15.000",
+     descuento: "25% OFF",
+     oferta: true,
+     variante: "dark",
+     badge: "🔥 Oferta",
+     wide: true,
+      
     },
     {
       nombre: "Diseño y perfilado con pinzas",
@@ -156,16 +170,49 @@ function Gallery() {
 }
 
 function Card({ item, index, onBook }) {
-  const cls = ["bb-card", item.variante || "", item.wide ? "wide" : ""].filter(Boolean).join(" ");
+  const cls = ["bb-card", item.variante || "", item.wide ? "wide" : ""]
+    .filter(Boolean)
+    .join(" ");
 
   return (
-    <article className={cls} style={{ animationDelay: `${0.05 + index * 0.06}s` }}>
-      {item.badge && <span className={`bb-badge${item.badgeSoft ? " soft" : ""}`}>{item.badge}</span>}
+    <article
+      className={cls}
+      style={{ animationDelay: `${0.05 + index * 0.06}s` }}
+    >
+      {item.badge && (
+        <span className={`bb-badge${item.badgeSoft ? " soft" : ""}`}>
+          {item.badge}
+        </span>
+      )}
+
       <h3 className="bb-name">{item.nombre}</h3>
+
       <p className="bb-desc">{item.desc}</p>
+
       <div className="bb-foot">
-        <strong className="bb-price">{item.precio}</strong>
-        <button className="bb-cta" type="button" onClick={() => onBook(item.nombre)}>
+        <div className="bb-price-wrap">
+          {item.oferta && (
+            <span className="bb-old-price">
+              {item.precioAnterior}
+            </span>
+          )}
+
+          <strong className="bb-price">
+            {item.precio}
+          </strong>
+
+          {item.oferta && (
+            <span className="bb-discount">
+              🔥 {item.descuento}
+            </span>
+          )}
+        </div>
+
+        <button
+          className="bb-cta"
+          type="button"
+          onClick={() => onBook(item.nombre)}
+        >
           Reservar
         </button>
       </div>
@@ -832,4 +879,5 @@ export default function App() {
      
     </div>
   );
+  
 }
