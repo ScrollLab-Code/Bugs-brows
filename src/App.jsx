@@ -11,8 +11,6 @@ import { supabase } from "./lib/supabase";
 
 
 
-const WHATSAPP_TEXT =
-  "Hola! Quiero reservar un turno en Bugs Brows.";
 const WHATSAPP_NUMBER = "5492942344488";
 const BOOKING_HOURS = "Lunes a sábados de 09:00 a 12:00 y de 21:00 a 23:00.";
 const TIME_OPTIONS = ["09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "21:30", "22:00", "22:30", "23:00"];
@@ -24,21 +22,6 @@ const isValidBookingTime = (fecha, horario) => {
   const day = date.getDay();
 
   return day >= 1 && day <= 6 && TIME_OPTIONS.includes(horario);
-};
-
-const whatsappUrl = ({ servicio, nombre, fecha, horario, nota } = {}) => {
-  const lines = servicio
-    ? [
-        "Hola! Quiero reservar un turno en Bugs Brows.",
-        `Servicio: ${servicio}`,
-        `Nombre: ${nombre}`,
-        `Fecha: ${fecha}`,
-        `Horario: ${horario}`,
-        nota ? `Nota: ${nota}` : "",
-      ].filter(Boolean)
-    : [WHATSAPP_TEXT];
-
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(lines.join("\n"))}`;
 };
 
 const GALERIA = [
@@ -74,27 +57,20 @@ const SERVICIOS = {
     {
       nombre: "Diseño y perfilado con cera",
       desc: "Epilación rápida y efectiva para unas cejas limpias y definidas por más tiempo.",
-     precioAnterior: "$  ̷2̷1̷.̷0̷0̷0̷  |  ",
-     precio: " $16.000",
-     descuento: "25% OFF",
-     oferta: true,
+      precio: " $21.000",
      variante: "dark",
-     badge: "🔥 Oferta",
-     wide: true,
+      badge: "🔥tendencia",
+      wide: true,
       
     },
     {
       nombre: "Diseño y perfilado con hilo",
       desc: "Técnica precisa y delicada que elimina el vello desde la raíz. Ideal para pieles sensibles.",
-     precioAnterior: " $  ̷2̷0̷.̷0̷0̷0̷  |  ",
-     precio: " $15.000",
-     descuento: "25% OFF",
-     oferta: true,
-     variante: "dark",
-     badge: "🔥 Oferta",
+      precio: " $20.000",
+      variante: "dark",
+     badge: "Popular",
      wide: true,
-      
-    },
+     },
     {
       nombre: "Diseño y perfilado con pinzas",
       desc: "Diseño personalizado según tu rostro para lograr cejas armónicas y prolijas.",
@@ -149,8 +125,6 @@ const SERVICIOS = {
     },
   ],
 };
-
-const CSS = ``;
 
 function Gallery() {
   const items = [...GALERIA, ...GALERIA];
