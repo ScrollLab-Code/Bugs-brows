@@ -29,7 +29,7 @@ export function AvisoServicioRosa() {
         Descubre nuestra nuevo servicio de <strong>Lash lifting técnica anime/japones</strong> para una mirada única y estilizada. ¡Reserva tu turno ahora!
       </p>
       <a 
-        href="/servicios" 
+        href="#servicios-pestanas"
         className="block w-full rounded-xl bg-gradient-to-r from-pink-500 to-rose-500 py-2.5 text-center text-sm font-semibold text-white shadow-md shadow-pink-500/25 hover:from-pink-600 hover:to-rose-600 transition-all"
       >
         Saber más
@@ -140,7 +140,7 @@ const SERVICIOS = {
       precio: "Consultar",
     },
      {
-      nombre: 'Lash lifting Tecnica KOREANA',
+      nombre: 'Lash lifting Tecnica COREANA',
       desc: "Resultado mas abierto, prolijo y natural que eleva y estiliza las pestañas desde la raiz",
       precio: "...",
       variante: "feat",
@@ -790,6 +790,7 @@ export default function App() {
   return (
     <div className="bb-shell">
       <Analytics />
+      <AvisoServicioRosa />
       <header className="bb-header">
        <div
   className="bb-mark bb-up"
@@ -849,7 +850,11 @@ export default function App() {
           if (filtro !== "Todos" && filtro !== categoria) return null;
 
           return (
-            <section className="bb-section" key={categoria}>
+            <section
+              className="bb-section"
+              id={categoria === "Pestañas" ? "servicios-pestanas" : undefined}
+              key={categoria}
+            >
               <div className="bb-heading">
                 <h2>{categoria}</h2>
                 <span />
