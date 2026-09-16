@@ -9,7 +9,7 @@ import foto5 from "./assets/foto5.jpeg";
 import foto6 from "./assets/foto6.jpeg";
 import { supabase } from "./lib/supabase";
 
-export function AvisoServicioRosa() {
+export function AvisoServicioRosa({ onLearnMore }) {
   const [visible, setVisible] = useState(true);
 
   if (!visible) return null;
@@ -28,12 +28,16 @@ export function AvisoServicioRosa() {
       <p className="text-xs leading-relaxed text-rose-900/70 mb-3">
         Descubre nuestra nuevo servicio de <strong>Lash lifting técnica anime/japones</strong> para una mirada única y estilizada. ¡Reserva tu turno ahora!
       </p>
-      <a 
-        href="#servicios-pestanas"
+      <button
+        type="button"
+        onClick={() => {
+          setVisible(false);
+          onLearnMore();
+        }}
         className="block w-full rounded-lg bg-gradient-to-r from-pink-300 to-rose-300 py-2 text-center text-xs font-semibold text-rose-900 shadow-sm shadow-pink-300/25 hover:from-pink-400 hover:to-rose-400 transition-all"
       >
         Saber más
-      </a>
+      </button>
     </div>
   );
 }
@@ -786,11 +790,20 @@ export default function App() {
   const [bookingService, setBookingService] = useState(null);
   const categorias = ["Todos", "Cejas", "Pestañas", "Otros"];
   const servicios = Object.values(SERVICIOS).flat().map((item) => item.nombre);
+  const goToNewService = () => {
+    setFiltro("Pestañas");
+    window.setTimeout(() => {
+      document.getElementById("servicios-pestanas")?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }, 0);
+  };
 
   return (
     <div className="bb-shell">
       <Analytics />
-      <AvisoServicioRosa />
+      <AvisoServicioRosa onLearnMore={goToNewService} />
       <header className="bb-header">
        <div
   className="bb-mark bb-up"
