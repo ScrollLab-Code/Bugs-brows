@@ -49,7 +49,6 @@ const SERVICIOS = {
       badge: "Completo",
       wide: true,
     },
-  
     {
       nombre: "Laminado sin tinte",
       desc: "Ideal para ordenar y dar forma a las cejas manteniendo su color natural.",
@@ -112,7 +111,7 @@ const SERVICIOS = {
     },
      {
       nombre: 'Lash lifting Tecnica KOREANA',
-      desc: "Resultado mas abierto, prolijo y natural que eleva y estiliza las pestañas desde la raiz"
+      desc: "Resultado mas abierto, prolijo y natural que eleva y estiliza las pestañas desde la raiz",
       precio: "...",
       variante: "dark",
       badge: "Proximamente en bugs brows.",
