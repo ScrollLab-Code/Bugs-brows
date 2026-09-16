@@ -9,6 +9,34 @@ import foto5 from "./assets/foto5.jpeg";
 import foto6 from "./assets/foto6.jpeg";
 import { supabase } from "./lib/supabase";
 
+export function AvisoServicioRosa() {
+  const [visible, setVisible] = useState(true);
+
+  if (!visible) return null;
+
+  return (
+    <div className="fixed bottom-5 right-5 z-50 max-w-sm rounded-2xl bg-white p-5 shadow-xl shadow-pink-500/10 border border-pink-100 border-l-4 border-l-pink-500 transition-all duration-300">
+      <div className="flex items-center justify-between mb-2">
+        <span className="text-sm font-bold text-pink-600">✨ ¡Nuevo Servicio!</span>
+        <button 
+          onClick={() => setVisible(false)} 
+          className="text-gray-400 hover:text-gray-600 text-lg font-bold"
+        >
+          &times;
+        </button>
+      </div>
+      <p className="text-sm text-gray-600 mb-4">
+        Descubre nuestra nuevo servicio de <strong>Lash lifting técnica anime/japones</strong> para una mirada única y estilizada. ¡Reserva tu turno ahora!
+      </p>
+      <a 
+        href="/servicios" 
+        className="block w-full rounded-xl bg-gradient-to-r from-pink-500 to-rose-500 py-2.5 text-center text-sm font-semibold text-white shadow-md shadow-pink-500/25 hover:from-pink-600 hover:to-rose-600 transition-all"
+      >
+        Saber más
+      </a>
+    </div>
+  );
+}
 
 
 const WHATSAPP_NUMBER = "5492942344488";
