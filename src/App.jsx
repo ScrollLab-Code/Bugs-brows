@@ -15,22 +15,22 @@ export function AvisoServicioRosa() {
   if (!visible) return null;
 
   return (
-    <div className="fixed bottom-5 right-5 z-50 max-w-sm rounded-2xl bg-white p-5 shadow-xl shadow-pink-500/10 border border-pink-100 border-l-4 border-l-pink-500 transition-all duration-300">
+    <div className="bb-service-notice">
       <div className="flex items-center justify-between mb-2">
-        <span className="text-sm font-bold text-pink-600">✨ ¡Nuevo Servicio!</span>
+        <span className="text-xs font-bold text-rose-700">✨ ¡Nuevo servicio!</span>
         <button 
           onClick={() => setVisible(false)} 
-          className="text-gray-400 hover:text-gray-600 text-lg font-bold"
+          className="text-rose-300 hover:text-rose-500 text-lg font-bold"
         >
           &times;
         </button>
       </div>
-      <p className="text-sm text-gray-600 mb-4">
+      <p className="text-xs leading-relaxed text-rose-900/70 mb-3">
         Descubre nuestra nuevo servicio de <strong>Lash lifting técnica anime/japones</strong> para una mirada única y estilizada. ¡Reserva tu turno ahora!
       </p>
       <a 
         href="#servicios-pestanas"
-        className="block w-full rounded-xl bg-gradient-to-r from-pink-500 to-rose-500 py-2.5 text-center text-sm font-semibold text-white shadow-md shadow-pink-500/25 hover:from-pink-600 hover:to-rose-600 transition-all"
+        className="block w-full rounded-lg bg-gradient-to-r from-pink-300 to-rose-300 py-2 text-center text-xs font-semibold text-rose-900 shadow-sm shadow-pink-300/25 hover:from-pink-400 hover:to-rose-400 transition-all"
       >
         Saber más
       </a>

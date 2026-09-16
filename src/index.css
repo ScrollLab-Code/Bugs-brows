@@ -35,6 +35,23 @@ body::before {
 @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 @keyframes pulse { 0%, 100% { transform: scale(1); opacity: .55; } 50% { transform: scale(1.55); opacity: 1; } }
+@keyframes noticeFade { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+.bb-service-notice {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  z-index: 200;
+  width: min(260px, calc(100vw - 36px));
+  padding: 13px 14px;
+  border: 1px solid rgba(244, 180, 194, .72);
+  border-left: 3px solid #e8a7b8;
+  border-radius: 13px;
+  background: linear-gradient(135deg, rgba(255, 250, 251, .96), rgba(255, 228, 236, .82));
+  box-shadow: 0 12px 32px rgba(196, 96, 122, .14);
+  animation: noticeFade .45s ease-out both;
+  backdrop-filter: blur(8px);
+}
 
 .bb-up { opacity: 0; animation: fadeUp .7s ease forwards; }
 .bb-shell { position: relative; min-height: 100vh; overflow-x: hidden; background: linear-gradient(180deg, #fff7f8 0%, #fff 46%, #fff7f8 100%); }
