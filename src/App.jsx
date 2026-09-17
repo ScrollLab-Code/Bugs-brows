@@ -7,6 +7,10 @@ import foto3 from "./assets/foto3.jpeg";
 import foto4 from "./assets/foto4.jpeg";
 import foto5 from "./assets/foto5.jpeg";
 import foto6 from "./assets/foto6.jpeg";
+import foto7 from "./assets/foto7.jpeg";
+import foto8 from "./assets/foto8.jpeg";
+import foto9 from "./assets/foto9.jpeg";
+import foto10 from "./assets/foto10.jpeg";
 import { supabase } from "./lib/supabase";
 
 export function AvisoServicioRosa({ onLearnMore }) {
@@ -63,6 +67,10 @@ const GALERIA = [
   { src: foto2, tag: "Laminado de cejas" },
   { src: foto3, tag: "Diseño y perfilado + henna" },
   { src: foto4, tag: "Lifting foxy" },
+  { src: foto7, tag: "Lash Lifting tecnica anime/japones" },
+  { src: foto8, tag: "Lash Lifting tecnica duo" },
+  { src: foto9, tag: "Lash Lifting tecnica foxy" },
+  { src: foto10, tag: "Lash Lifting tecnica clasica" },
 ];
 
 const ANTES_DESPUES = [
